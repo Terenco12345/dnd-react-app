@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from "./components/Header";
 import styles from "./css/app.module.css";
 
 import{
@@ -13,7 +14,7 @@ import LandingPage from "./components/landing/LandingPage";
 function App() {
   return (
     <div className = {styles.root}>
-      
+      <Header/>
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
