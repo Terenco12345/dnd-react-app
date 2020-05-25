@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '../../css/landing.module.css';
+import logo from '../../images/logo.png';
 import whyImageOne from "../../images/why-1.png";
 import whyImageTwo from "../../images/why-2.png";
 import whyImageThree from "../../images/why-3.png";
@@ -20,7 +21,7 @@ class LandingPage extends React.Component{
     return(
       <div className={styles.landingRoot}>
         <div className={styles.landingTitle}>
-          <a href="/" className={styles.registerButton}>Get Started Now!</a>
+          <img src={logo}></img>
         </div>
         <div className={styles.landingBody}>
           <h1>DnD App</h1>

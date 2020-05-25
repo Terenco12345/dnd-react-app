@@ -1,9 +1,10 @@
 .landingRoot{
-  height: 3000px;
-  background-size: 2000px;
+  height: 100%;
+  background-size: 100%;
   background-image: url("../images/background-landing.png");
   background-repeat: no-repeat;
   background-position: top;
+  padding-bottom: 5%;
 }
 
 /**
@@ -12,40 +13,13 @@
 .landingTitle{
   display: flex;
   margin: auto;
-  height: 800px;
-  background-size: 1800px;
-  background-image: url("../images/logo.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 100%;
+  padding-top: 2%;
+  padding-bottom: 0%;
   filter: drop-shadow(0 0 20px rgb(0, 0, 0));
 }
 
-/**
-* Register Button
-**/
-.registerButton {
-  margin: auto;
-  margin-bottom: 70px;
-  height: 80px;
-  color: rgb(255, 188, 188) !important;
-  text-transform: uppercase;
-  text-decoration: none;
-  background: #8d2928;
-  padding: 20px;
-  border-radius: 5px;
-  display: inline-block;
-  border: none;
-  transition: all 0.4s ease 0s;
-  filter: drop-shadow(0 0 20px #333);
-}
-.registerButton:hover {
-  background: #434343;
-  letter-spacing: 1px;
-  -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-  -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-  box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
-  transition: all 0.4s ease 0s;
+.landingTitle img{
+  width:100%;
 }
 
 /**
@@ -53,9 +27,9 @@
 */
 .landingBody{
   margin: auto;
-  margin-top: 120px;
-  padding-left: 20%;
-  padding-right: 20%;
+  margin-top: 10%;
+  padding-left: 10%;
+  padding-right: 10%;
   text-align: center;
 }
 
@@ -64,29 +38,29 @@
 }
 
 .landingBody h1{
-  font-size: 100px;
+  font-size: 100%;
   color: #c9c9c9;
 }
 
 .landingBody h2{
-  font-size: 40px;
+  font-size: 50%;
   color: #c9c9c9;
 }
 
 .landingBody h3{
-  font-size: 30px;
+  font-size: 60%;
   color: #b3dcec;
   text-align: left;
 }
 
 .landingBody h4{
-  font-size: 20px;
+  font-size: 40%;
   color: #c9c9c9;
   text-align: left;
 }
 
 .landingBody p{
-  font-size: 20px;
+  font-size: 40%;
   color: #64b2d1;
   text-align: left;
 }  
@@ -107,6 +81,10 @@ p, h1, h2, h3, h4, h5{
 .whyRow div{
   float: left;
   width: 33.33%;
+}
+
+.whyRow div img{
+  width: 80%;
 }
 
 .whyRow div h4{
