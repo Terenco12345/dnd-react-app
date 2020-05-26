@@ -10,6 +10,7 @@ import{
 
 import LandingPage from "./components/landing/LandingPage";
 import RegisterPage from './components/register/RegisterPage';
+import LoginPage from './components/login/LoginPage';
 
 function App() {
   return (
@@ -22,6 +23,9 @@ function App() {
           </Route>
           <Route exact path="/register">
             <RegisterPage />
+          </Route>
+          <Route exact path="/login">
+            <LoginPage />
           </Route>
         </Switch>
       </BrowserRouter>

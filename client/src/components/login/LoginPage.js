@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../../css/form.module.css';
 
-class RegisterPage extends React.Component{
+class LoginPage extends React.Component{
   constructor(props){
     super(props);
     this.state = {
@@ -10,24 +10,15 @@ class RegisterPage extends React.Component{
   }
 
   componentDidMount(){
-
+    
   }
 
   render(){
     return (
         <div className={styles.root}>
             <div className={styles.container}>
-              <h1>Register</h1>
+              <h1>Login</h1>
               <form>
-                <div className={styles.row}>
-                  <div>
-                    <label htmlFor="dname">Display Name:</label>
-                  </div>
-                  <div>
-                    <input type="text" id="dname"></input>
-                  </div>
-                </div>
-
                 <div className={styles.row}>
                   <div>
                     <label htmlFor="email">Email:</label>
@@ -47,16 +38,7 @@ class RegisterPage extends React.Component{
                 </div>
 
                 <div className={styles.row}>
-                  <div>
-                    <label htmlFor="passwordConfirm">Password Confirmation:</label>
-                  </div>
-                  <div>
-                    <input type="password" id="passwordConfirm"></input>
-                  </div>
-                </div>
-
-                <div className={styles.row}>
-                  <input type="submit" id="register" value="Register"></input>
+                  <input type="submit" id="login" value="Login"></input>
                 </div>
               </form>
             </div>
@@ -65,4 +47,4 @@ class RegisterPage extends React.Component{
   }
 }
 
-export default RegisterPage;
+export default LoginPage;
