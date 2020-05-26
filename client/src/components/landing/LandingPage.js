@@ -21,7 +21,7 @@ class LandingPage extends React.Component{
     return(
       <div className={styles.landingRoot}>
         <div className={styles.landingTitle}>
-          <img src={logo}></img>
+          <img src={logo} alt="Logo"></img>
         </div>
         <div className={styles.landingBody}>
           <h1>DnD App</h1>
@@ -40,21 +40,21 @@ class LandingPage extends React.Component{
             <div>
               <h4>Stop doing taxes!</h4>
               <br/>
-              <img src={whyImageOne}></img>
+              <img src={whyImageOne} alt="Taxes"></img>
               <br/>
               <p>Sometimes in DnD, you feel like an accountant crunching numbers for a living. With this app, trust that the hard work is done for you.</p>
             </div>
             <div>
               <h4>Keep your friends updated!</h4>
               <br/>
-              <img src={whyImageTwo}></img>
+              <img src={whyImageTwo} alt="Friends"></img>
               <br/>
               <p>Sharing your characters and campaign details for your group has never been easier! </p>
             </div>
             <div>
               <h4>Everything right where you need it.</h4>
               <br/>
-              <img src={whyImageThree}></img>
+              <img src={whyImageThree} alt="Tools"></img>
               <br/>
               <p>All the tools you need are right at your disposal! No more lost papers getting in the way of roleplaying.</p>
             </div>

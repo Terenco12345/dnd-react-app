@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from '../css/header.module.css';
-import hamburgerIcon from '../images/hamburger-icon.png';
 import logo from '../images/logo.png';
 
 class Header extends React.Component{
@@ -22,17 +21,19 @@ class Header extends React.Component{
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 
                 <div className={styles.header}>
-                    <a href="/" className={styles.logo}><img src={logo}/></a>
-                    <a href="javascript:void(0);" className={styles.menuIcon} onClick={()=>{this.toggleMenu()}}>
-                        <i class="fa fa-bars"/>
+                    <a href="/" className={styles.logo}><img src={logo} alt="Logo"/></a>
+                    <a href="#" className={styles.menuIcon} onClick={()=>{this.toggleMenu()}}>
+                        <i className="fa fa-bars" alt="Menu Icon"/>
                     </a>
                 </div>
-                <div className={this.state.menuEnabled ? styles.linkContainer : styles.linkContainerDisabled}>
+                {this.state.menuEnabled &&
+                <div className={styles.linkContainer}>
                     <a href="/">Home Page</a>
                     <a href="/register">Register</a>
                     <a href="/login">Login</a>
                     <a href="/characters">My Characters</a>
                 </div>
+                }
             </div>
         );
     }

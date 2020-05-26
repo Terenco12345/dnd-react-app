@@ -6,10 +6,10 @@ import{
   BrowserRouter,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 
 import LandingPage from "./components/landing/LandingPage";
+import RegisterPage from './components/register/RegisterPage';
 
 function App() {
   return (
@@ -19,6 +19,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <LandingPage />
+          </Route>
+          <Route exact path="/register">
+            <RegisterPage />
           </Route>
         </Switch>
       </BrowserRouter>
