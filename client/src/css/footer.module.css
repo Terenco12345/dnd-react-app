@@ -1,4 +1,18 @@
 .footerRoot{
     background-color: rgb(24, 3, 3);
-    height: 400px;
+    height: 300px;
+    padding: 3%;
+    text-align: center;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.socialMediaContainer a{
+    margin: 20px;
+    text-decoration: none;
+    color: rgb(189, 189, 189);
+}
+
+.socialMediaContainer a:hover{
+    color: rgb(255, 255, 255);
 }
