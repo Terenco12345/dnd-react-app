@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from "./components/Header";
 import styles from "./css/app.module.css";
 
 import{
@@ -11,6 +10,8 @@ import{
 import LandingPage from "./components/landing/LandingPage";
 import RegisterPage from './components/register/RegisterPage';
 import LoginPage from './components/login/LoginPage';
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           </Route>
         </Switch>
       </BrowserRouter>
+      <Footer/>
     </div>
   );
 }
