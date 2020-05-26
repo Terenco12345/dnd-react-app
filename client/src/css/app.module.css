@@ -5,3 +5,38 @@
   background: rgb(139,13,13);
   background: linear-gradient(180deg, rgba(139,13,13,1) 0%, rgba(91,8,8,1) 49%, rgba(69,6,6,1) 100%);
 }
+
+/**
+* Text
+*/
+h1{
+  color: #c9c9c9;
+  font-size: 300%;
+}
+
+h2{
+  font-size: 50%;
+  color: #c9c9c9;
+}
+
+h3{
+  font-size: 60%;
+  color: #b3dcec;
+  text-align: left;
+}
+
+h4{
+  font-size: 40%;
+  color: #c9c9c9;
+  text-align: left;
+}
+
+p{
+  font-size: 40%;
+  color: #64b2d1;
+  text-align: left;
+}  
+
+p, h1, h2, h3, h4, h5{
+  filter: drop-shadow(0 0 20px rgb(0, 0, 0));
+}
