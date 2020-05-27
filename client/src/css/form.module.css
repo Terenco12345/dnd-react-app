@@ -17,6 +17,11 @@
     margin: auto;
 }
 
+.error{
+    font-size: 130%;
+    color: red;
+}
+
 .row {
     margin: auto;
 }
