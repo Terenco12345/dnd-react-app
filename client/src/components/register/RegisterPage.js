@@ -1,6 +1,9 @@
 import React from 'react';
 import styles from '../../css/form.module.css';
 
+import axios from 'axios';
+import {serverIP} from '../../config';
+
 const validEmailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const validPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
 
@@ -37,10 +40,11 @@ class RegisterPage extends React.Component{
     this.setState({passwordConfirm: event.target.value});
   }
 
-  submitHandler = (event) => {
+  submitHandler = async (event) => {
     event.preventDefault();
     if(this.validateClientSide()){
       this.setState({
+        overallError: "",
         displayNameError: "",
         emailError: "",
         passwordError: "",
@@ -48,7 +52,25 @@ class RegisterPage extends React.Component{
       });
 
       // Send register request
+      await axios({
+        method: 'post',
+        url: serverIP+'/register',
+        data: {
+          displayName: this.state.displayName,
+          email: this.state.email,
+          password: this.state.password,
+        }
+      }).then((res)=>{
+        console.log(res);
+        console.log("Account successfully created!");
+        // Login with this user
 
+      }).catch((err)=>{
+        if(err && err.response.status === 400){
+          console.log(err.response);
+          this.setState({overallError: err.response.data});
+        }
+      });
     } else {
       console.log("Register UI: Client side validation of form details failed.");
     }
@@ -98,6 +120,7 @@ class RegisterPage extends React.Component{
 
     } else {
       overallError = "Cannot leave any fields empty!";
+      valid = false;
     }
 
     this.setState({

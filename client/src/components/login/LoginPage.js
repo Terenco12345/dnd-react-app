@@ -1,5 +1,7 @@
 import React from 'react';
 import styles from '../../css/form.module.css';
+import axios from 'axios';
+import {serverIP} from '../../config';
 
 class LoginPage extends React.Component{
   constructor(props){
@@ -25,21 +27,38 @@ class LoginPage extends React.Component{
     this.setState({password: event.target.value});
   }
 
-  submitHandler = (event) => {
+  submitHandler = async (event) => {
     event.preventDefault();
 
     // Check if the form is valid and can be sent
     // Most validation should theoretically be done on server side.
     if(this.validateClientSide()){
       this.setState({
-        email: "",
-        password: "",
         emailError: "",
         passwordError: "",
       });
       
       // Should send a login request to the server.
-      
+      await axios({
+        method: 'post',
+        url: serverIP+'/login',
+        data: {
+          email: this.state.email,
+          password: this.state.password,
+        }
+      }).then((res)=>{
+        console.log(res);
+        console.log("Successfully logged in!");
+        // Login with this user
+        
+      }).catch((err)=>{
+        if(err){
+          console.log(err);
+          console.log(err.response);
+          this.setState({overallError: err.response.data});
+        }
+      });
+
     } else {
       console.log("Login UI: Client side validation of form details failed.");
     }

@@ -30,7 +30,7 @@ class Header extends React.Component{
                     <a href="/">Home Page</a>
                     <a href="/register">Register</a>
                     <a href="/login">Login</a>
-                    <a href="/characters">My Characters</a>
+                    <a href="/character-sheet-gallery">My Characters</a>
                 </div>
                 }
             </div>
