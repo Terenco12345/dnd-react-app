@@ -50,21 +50,38 @@ module.exports = function(app){
                   }, config.jwt.secret, config.jwt.options);
 
                 res.cookie('authtoken', token, config.jwt.cookie);
-                res.send(user);
+                res.send({displayName: user.displayName, email: user.email});
             }
         }) (req, res, next)
     });
 
-    app.use("/logout", (req, res, next) => {
+    app.post("/logout", (req, res, next) => {
         passport.authenticate('jwt', (err, user, info)=>{
             if(err){
                 res.status(500).send(err);
             }
             if(info){
+                console.log(info);
                 res.status(401).send(info);
             }
             if(user){
                 res.cookie('authtoken', '', config.jwt.cookie);
+                res.send("Successfully logged out.");
+            }
+        }) (req, res, next);
+    });
+
+    app.get("/current-user", (req, res, next) =>{
+        passport.authenticate('jwt', (err, user, info)=>{
+            if(err){
+                res.status(500).send(err);
+            }
+            if(info){
+                console.log(info);
+                res.status(401).send(info);
+            }
+            if(user){
+                res.send(user);
             }
         }) (req, res, next);
     });

@@ -8,8 +8,9 @@ import{
 } from "react-router-dom";
 
 import LandingPage from "./components/landing/LandingPage";
-import RegisterPage from './components/register/RegisterPage';
-import LoginPage from './components/login/LoginPage';
+import RegisterPage from './components/user/RegisterPage';
+import LoginPage from './components/user/LoginPage';
+import LogoutPage from './components/user/LogoutPage';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import CharacterSheetGalleryPage from "./components/charactersheet/CharacterSheetGalleryPage";
@@ -17,8 +18,8 @@ import CharacterSheetGalleryPage from "./components/charactersheet/CharacterShee
 function App() {
   return (
     <div className = {styles.root}>
-      <Header/>
       <BrowserRouter>
+        <Header/>
         <Switch>
           <Route exact path="/">
             <LandingPage />
@@ -29,12 +30,18 @@ function App() {
           <Route exact path="/login">
             <LoginPage />
           </Route>
+          <Route exact path="/log-out">
+            <LogoutPage />
+          </Route>
+          <Route path="/current-user">
+            <CharacterSheetGalleryPage/>
+          </Route>
           <Route path="/character-sheet-gallery">
             <CharacterSheetGalleryPage/>
           </Route>
         </Switch>
+        <Footer/>
       </BrowserRouter>
-      <Footer/>
     </div>
   );
 }
