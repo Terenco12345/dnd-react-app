@@ -10,7 +10,6 @@ import{
 import LandingPage from "./components/landing/LandingPage";
 import RegisterPage from './components/user/RegisterPage';
 import LoginPage from './components/user/LoginPage';
-import LogoutPage from './components/user/LogoutPage';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import CharacterSheetGalleryPage from "./components/charactersheet/CharacterSheetGalleryPage";
@@ -29,9 +28,6 @@ function App() {
           </Route>
           <Route exact path="/login">
             <LoginPage />
-          </Route>
-          <Route exact path="/log-out">
-            <LogoutPage />
           </Route>
           <Route path="/current-user">
             <CharacterSheetGalleryPage/>

@@ -107,7 +107,7 @@ class RegisterPage extends React.Component {
         }).then((res) => {
           // Redirect to current-user
           this.props.setUser(res.data);
-          this.props.history.push('/');
+          this.props.history.push('/current-user');
         }).catch((err) => {
           if (err) {
             if (err.response !== undefined) {
@@ -164,7 +164,7 @@ class RegisterPage extends React.Component {
         passwordConfirmError = "Password confirmation must be the same as your password!";
         valid = false;
       } else {
-        passwordError = "";
+        passwordConfirmError = "";
       }
 
     } else {

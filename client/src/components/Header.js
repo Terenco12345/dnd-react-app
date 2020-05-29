@@ -5,6 +5,7 @@ import { setUser } from '../redux/actions/userActions';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { serverIP } from '../config';
+import { withRouter } from 'react-router';
 
 class Header extends React.Component {
     constructor(props) {
@@ -14,8 +15,8 @@ class Header extends React.Component {
         }
     }
 
-    componentDidMount() {
-        axios({
+    async componentDidMount() {
+        await axios({
             method: 'get',
             withCredentials: true,
             url: serverIP + '/current-user'
@@ -50,7 +51,7 @@ class Header extends React.Component {
                         {!this.props.user && <a href="/login">Login</a>}
                         {this.props.user && <a href="/profile">My Profile</a>}
                         {this.props.user && <a href="/character-sheet-gallery">My Characters</a>}
-                        {this.props.user && <a href="/log-out">Log out</a>}
+                        {this.props.user && <a href="/#" onClick={this.logOut.bind(this)}>Log out</a>}
                     </div>
                 }
             </div>
@@ -62,6 +63,23 @@ class Header extends React.Component {
             return { menuEnabled: !state.menuEnabled }
         })
     }
+
+    async logOut(){
+        await axios({
+            method: 'post',
+            withCredentials: true,
+            url: serverIP + '/logout'
+        }).then((res) => {
+            console.log("Successfully logged out user.");
+            this.props.setUser(null);
+            this.props.history.push('/');
+        }).catch((err) => {
+            if (err) {
+                this.props.setUser(null);
+                this.props.history.push('/');
+            }
+        });
+    }
 }
 const mapStateToProps = state => ({
     user: state.user
@@ -71,4 +89,4 @@ const mapDispatchToProps = dispatch => ({
     setUser: user => dispatch(setUser(user))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));
