@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const initializePassport = require('./passportConfig');
+const config = require('./auth');
 
 // Application keys
 const mongoURI = "mongodb+srv://admin:admin@dndmasterapp-cluster-rk8hu.mongodb.net/dnd?retryWrites=true&w=majority";
@@ -28,13 +29,14 @@ const app = express();
 const port = 5000;
 
 app.use((req, res, next) => {
-    res.append('Access-Control-Allow-Origin', ['*']);
+    res.append('Access-Control-Allow-Origin', ['http://localhost:3000']);
     res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
     res.append('Access-Control-Allow-Headers', 'Content-Type');
+    res.append('Access-Control-Allow-Credentials', true);
     next();
 });
 
-app.use(cookieParser());
+app.use(cookieParser(config.jwt.secret))
 app.use(bodyParser.json());
 app.use(passport.initialize());
 

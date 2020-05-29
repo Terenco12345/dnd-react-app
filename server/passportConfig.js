@@ -4,8 +4,20 @@ require("./models/User");
 const User = mongoose.model("users");
 const bcrypt = require('bcrypt');
 const LocalStrategy = require("passport-local").Strategy;
+var JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const config = require('./auth');
 
 module.exports = function initializePassport(passport){
+    var cookieExtractor = function(req) {
+        var token = null;
+        if (req && req.cookies)
+        {
+            token = req.cookies['authtoken'];
+        }
+        return token;
+    };
+
     const authenticateUserLocal = async (email, password, done) => {
         try {
             const user = await User.findOne({email: email});
@@ -28,11 +40,12 @@ module.exports = function initializePassport(passport){
     };
 
     // Passport Stuff
-    passport.use(new LocalStrategy({usernameField: 'email'}, 
+    passport.use(new LocalStrategy({usernameField: 'email', session: false}, 
     authenticateUserLocal));
-
-    passport.serializeUser((user, done) => {});
-    passport.deserializeUser((id, done) => {});
+    passport.use(new JwtStrategy({secretOrKey: config.jwt.secret, jwtFromRequest: cookieExtractor}, (payload, done) => {
+        console.log(payload);
+        return done(null, payload);
+    }));
 }
 
 

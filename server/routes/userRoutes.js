@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const User = mongoose.model("users");
+const config = require("../auth");
 
 module.exports = function(app){
     app.post('/register', async (req, res)=>{
@@ -32,19 +33,39 @@ module.exports = function(app){
         });
     });
 
-    app.post('/login', function(req, res, next){
+    app.post('/login', async function(req, res, next){
         passport.authenticate('local', function(err, user, info){
-            console.log(info);
             if(err){    // Internal server error
                 res.status(500).send(err);
             }
             if(!user){  // User not found or wrong password
                 res.status(401).send(info.message);
             } else { // User found!
-                // Sign and send a JWT token
-                
+                // Sign and send a JWT token as a cookie
+                var token = jwt.sign({
+                    user: {
+                        displayName: user.displayName,
+                        email: user.email
+                    }
+                  }, config.jwt.secret, config.jwt.options);
+
+                res.cookie('authtoken', token, config.jwt.cookie);
                 res.send(user);
             }
         }) (req, res, next)
+    });
+
+    app.use("/logout", (req, res, next) => {
+        passport.authenticate('jwt', (err, user, info)=>{
+            if(err){
+                res.status(500).send(err);
+            }
+            if(info){
+                res.status(401).send(info);
+            }
+            if(user){
+                res.cookie('authtoken', '', config.jwt.cookie);
+            }
+        }) (req, res, next);
     });
 }

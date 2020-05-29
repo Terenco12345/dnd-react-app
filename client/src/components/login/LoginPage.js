@@ -2,6 +2,8 @@ import React from 'react';
 import styles from '../../css/form.module.css';
 import axios from 'axios';
 import {serverIP} from '../../config';
+import cookie from "universal-cookie";
+import Cookies from 'universal-cookie';
 
 class LoginPage extends React.Component{
   constructor(props){
@@ -41,21 +43,21 @@ class LoginPage extends React.Component{
       // Should send a login request to the server.
       await axios({
         method: 'post',
+        withCredentials: true,
         url: serverIP+'/login',
         data: {
           email: this.state.email,
           password: this.state.password,
         }
       }).then((res)=>{
-        console.log(res);
         console.log("Successfully logged in!");
-        // Login with this user
-        
       }).catch((err)=>{
         if(err){
           console.log(err);
           console.log(err.response);
-          this.setState({overallError: err.response.data});
+          if(err.response !== undefined){
+            this.setState({overallError: err.response.data});
+          }
         }
       });
 
