@@ -11,9 +11,9 @@ const config = require('./auth');
 module.exports = function initializePassport(passport){
     var cookieExtractor = function(req) {
         var token = null;
-        if (req && req.cookies)
+        if (req && req.signedCookies)
         {
-            token = req.cookies['authtoken'];
+            token = req.signedCookies['authtoken'];
         }
         return token;
     };

@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from '../../css/form.module.css';
 import axios from 'axios';
-import {serverIP} from '../../config';
-import cookie from "universal-cookie";
-import Cookies from 'universal-cookie';
+import { serverIP } from '../../config';
+import { setUser } from '../../redux/actions/userActions';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 class LoginPage extends React.Component{
   constructor(props){
@@ -13,12 +14,8 @@ class LoginPage extends React.Component{
       password: "",
       emailError: "",
       passwordError: "",
-      overallError: ""
+      overallError: "",
     }
-  }
-
-  componentDidMount(){
-    
   }
 
   emailChangeHandler = (event) => {
@@ -50,22 +47,24 @@ class LoginPage extends React.Component{
           password: this.state.password,
         }
       }).then((res)=>{
-        console.log("Successfully logged in!");
+        // Redirect to current-user
+        this.props.setUser(res.data);
+        this.props.history.push('/');
       }).catch((err)=>{
         if(err){
-          console.log(err);
-          console.log(err.response);
           if(err.response !== undefined){
             this.setState({overallError: err.response.data});
           }
         }
       });
-
     } else {
       console.log("Login UI: Client side validation of form details failed.");
     }
   }
 
+  /**
+   * This method is used to validate the login form on the client side.
+   */
   validateClientSide = () => {
     let emailError = "";
     let passwordError = "";
@@ -114,7 +113,7 @@ class LoginPage extends React.Component{
                     <input type="password" id="password" value={this.state.password} onChange={this.passwordChangeHandler}></input>
                   </div>
                 </div>
-
+                <a href="/register">Don't have an account? Go here to register!</a>
                 <div className={styles.row}>
                   <input type="submit" id="login" value="Login"></input>
                 </div>
@@ -125,4 +124,12 @@ class LoginPage extends React.Component{
   }
 }
 
-export default LoginPage;
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+const mapDispatchToProps = dispatch => ({
+  setUser: user => dispatch(setUser(user))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoginPage));

@@ -57,3 +57,14 @@
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
 }
+
+.root a{
+    text-align: center;
+    font-size: 200%;
+    color: rgb(114, 112, 112);
+    text-decoration: none;
+}
+
+.root a:hover{
+    color: rgb(179, 179, 179);
+}

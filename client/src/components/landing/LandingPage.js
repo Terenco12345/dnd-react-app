@@ -9,7 +9,7 @@ class LandingPage extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-
+      redirect: null
     }
   }
 

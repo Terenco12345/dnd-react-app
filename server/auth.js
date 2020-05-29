@@ -5,10 +5,12 @@ module.exports = {
             expiresIn: '1h',
         },
         cookie: {
+            maxAge: 86400000,
             httpOnly: true,
             sameSite: false,
             signed: true,
-            secure: true
+            secure: false,
+            overwrite: true
         }
     }
 }
