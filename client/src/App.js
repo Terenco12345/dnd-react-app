@@ -12,6 +12,7 @@ import RegisterPage from './components/register/RegisterPage';
 import LoginPage from './components/login/LoginPage';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import CharacterSheetGalleryPage from "./components/charactersheet/CharacterSheetGalleryPage";
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
           </Route>
           <Route exact path="/login">
             <LoginPage />
+          </Route>
+          <Route path="/character-sheet-gallery">
+            <CharacterSheetGalleryPage/>
           </Route>
         </Switch>
       </BrowserRouter>

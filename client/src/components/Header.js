@@ -14,7 +14,6 @@ class Header extends React.Component{
         
     }
     
-    
     render(){
         return (
             <div className={styles.headerRoot}>
@@ -22,7 +21,7 @@ class Header extends React.Component{
 
                 <div className={styles.header}>
                     <a href="/" className={styles.logo}><img src={logo} alt="Logo"/></a>
-                    <a href="#" className={styles.menuIcon} onClick={()=>{this.toggleMenu()}}>
+                    <a href="#top" className={styles.menuIcon} onClick={()=>{this.toggleMenu()}}>
                         <i className="fa fa-bars" alt="Menu Icon"/>
                     </a>
                 </div>
@@ -31,7 +30,7 @@ class Header extends React.Component{
                     <a href="/">Home Page</a>
                     <a href="/register">Register</a>
                     <a href="/login">Login</a>
-                    <a href="/characters">My Characters</a>
+                    <a href="/character-sheet-gallery">My Characters</a>
                 </div>
                 }
             </div>

@@ -22,5 +22,8 @@
   "dependencies": {
     "concurrently": "^5.2.0",
     "lerna": "^3.21.0"
+  },
+  "devDependencies": {
+    "redux-devtools": "^3.5.0"
   }
 }
