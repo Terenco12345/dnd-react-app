@@ -1,10 +1,13 @@
 import {SET_USER} from "../actions/actionTypes";
 
-export default function user(state=null, action){
+const initialState = {
+    currentUser: null
+}
+
+export default function user(state=initialState, action){
     switch(action.type){
         case SET_USER:
-            state = action.user;
-            return state;
+            return {...state, currentUser: action.user};
         default:
             return state;
     }

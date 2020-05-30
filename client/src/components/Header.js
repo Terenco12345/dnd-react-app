@@ -36,7 +36,7 @@ class Header extends React.Component {
 
                 <div className={styles.header}>
                     <a href="/" className={styles.logo}><img src={logo} alt="Logo" /></a>
-                    {this.props.user &&
+                    {this.props.user.currentUser &&
                         <a href="/current-user" className={styles.user}><i className="fa fa-user" /></a>
                     }
 
@@ -47,11 +47,11 @@ class Header extends React.Component {
                 {this.state.menuEnabled &&
                     <div className={styles.linkContainer}>
                         <a href="/">Home Page</a>
-                        {!this.props.user && <a href="/register">Register</a>}
-                        {!this.props.user && <a href="/login">Login</a>}
-                        {this.props.user && <a href="/profile">My Profile</a>}
-                        {this.props.user && <a href="/character-sheet-gallery">My Characters</a>}
-                        {this.props.user && <a href="/#" onClick={this.logOut.bind(this)}>Log out</a>}
+                        {!this.props.user.currentUser && <a href="/register">Register</a>}
+                        {!this.props.user.currentUser && <a href="/login">Login</a>}
+                        {this.props.user.currentUser && <a href="/profile">My Profile</a>}
+                        {this.props.user.currentUser && <a href="/character-sheet-gallery">My Characters</a>}
+                        {this.props.user.currentUser && <a href="/#" onClick={this.logOut.bind(this)}>Log out</a>}
                     </div>
                 }
             </div>
