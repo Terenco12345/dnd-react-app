@@ -61,7 +61,6 @@ module.exports = function(app){
                 res.status(500).send(err);
             }
             if(info){
-                console.log(info);
                 res.status(401).send(info);
             }
             if(user){
@@ -77,7 +76,6 @@ module.exports = function(app){
                 res.status(500).send(err);
             }
             if(info){
-                console.log(info);
                 res.status(401).send(info);
             }
             if(user){
