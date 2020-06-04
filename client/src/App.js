@@ -13,6 +13,7 @@ import LoginPage from './components/user/LoginPage';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import CharacterSheetGalleryPage from "./components/charactersheet/CharacterSheetGalleryPage";
+import ProfilePage from "./components/user/ProfilePage";
 
 function App() {
   return (
@@ -29,8 +30,8 @@ function App() {
           <Route exact path="/login">
             <LoginPage />
           </Route>
-          <Route path="/current-user">
-            <CharacterSheetGalleryPage/>
+          <Route exact path="/profile">
+            <ProfilePage/>
           </Route>
           <Route path="/character-sheet-gallery">
             <CharacterSheetGalleryPage/>
