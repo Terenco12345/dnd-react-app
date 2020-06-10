@@ -5,8 +5,35 @@ import { setUser } from '../../redux/actions/userActions';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import { Paper, Typography, IconButton } from '@material-ui/core';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormHelperText from '@material-ui/core/FormHelperText';
+
+
 const validEmailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const validPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
+
+const styles = theme => ({
+  root: {
+    padding: '5%',
+    margin: 'auto',
+    marginTop: '4%',
+    width: 800,
+    maxWidth: '90%'
+  },
+  textField: {
+    margin: '2%',
+    width: 400,
+    maxWidth: '90%'
+  },
+})
 
 class RegisterPage extends React.Component {
   constructor(props) {
@@ -22,6 +49,9 @@ class RegisterPage extends React.Component {
       emailError: "",
       passwordError: "",
       passwordConfirmError: "",
+
+      showPassword: false,
+      showPasswordConfirm: false
     }
   }
 
@@ -179,11 +209,63 @@ class RegisterPage extends React.Component {
     return valid;
   }
 
-  render() {
-    return (
-      <div>
+  handleClickShowPassword = () => {
+    this.setState({ showPassword: !this.state.showPassword });
+  };
 
-      </div>
+  handleClickShowPasswordConfirm = () => {
+    this.setState({ showPasswordConfirm: !this.state.showPasswordConfirm });
+  };
+
+  render() {
+    const classes = this.props.classes;
+    return (
+      <Paper className={classes.root}>
+        <Typography variant="h4" align="center" style={{marginBottom:"10px"}}>
+          Register new account
+        </Typography>
+        <form noValidate autoComplete="off">
+          
+          <Grid container container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <FormHelperText error textalign="center">{this.state.overallError}</FormHelperText>
+            <TextField id="displayName" label="Display Name" variant="outlined" className={classes.textField} onChange={this.displayNameChangeHandler}
+            error = { this.state.displayNameError!=="" } helperText= { this.state.displayNameError }/>
+            <TextField id="email" label="Email" variant="outlined" className={classes.textField} onChange={this.emailChangeHandler}
+            error = { this.state.emailError!=="" } helperText= { this.state.emailError }/>
+            <TextField id="password" label="Password" variant="outlined" className={classes.textField} 
+            type={this.state.showPassword ? 'text' : 'password'} 
+            onChange={this.passwordChangeHandler} 
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="start">
+                  <IconButton onClick={this.handleClickShowPassword}>
+                    {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }} 
+            error = { this.state.passwordError!=="" } helperText= { this.state.passwordError }/>
+            <TextField id="passwordConfirm" label="Confirm Password" variant="outlined" className={classes.textField} 
+            type={this.state.showPasswordConfirm ? 'text' : 'password'} 
+            onChange={this.passwordConfirmChangeHandler} 
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="start">
+                  <IconButton onClick={this.handleClickShowPasswordConfirm}>
+                    {this.state.showPasswordConfirm ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }} 
+            error = { this.state.passwordConfirmError!=="" } helperText= { this.state.passwordConfirmError }/>
+            <Button variant="contained" color="primary" component="span" size="large" className={classes.textField} onClick={this.submitHandler}>Register</Button>
+          </Grid>
+        </form>
+      </Paper>
     );
   }
 }
@@ -196,4 +278,4 @@ const mapDispatchToProps = dispatch => ({
   setUser: user => dispatch(setUser(user))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RegisterPage));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(RegisterPage)));
