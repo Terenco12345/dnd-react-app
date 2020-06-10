@@ -1,36 +1,55 @@
 import React from 'react';
+import { withStyles } from '@material-ui/styles';
+import { setUser } from '../../redux/actions/userActions';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
 import Typography from "@material-ui/core/Typography";
-import { withStyles } from '@material-ui/styles'
+import Button from "@material-ui/core/Button";
 
 const styles = theme => ({
   root: {
-    paddingTop: theme.spacing(4),
-    minHeight: 1000
+    paddingTop: '10%',
+    minHeight: 1000,
+    textAlign: 'center',
+  },
+  button: {
+    marginTop: '50px',
+    margin: 'auto',
+    width: 400,
+    height: 50,
+    maxWidth: '80%',
+    fontSize: '100%'
   }
 })
 
 class LandingPage extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-
-  }
-
   render() {
     const classes = this.props.classes;
-    return (
-      <div className={classes.root}>
-        <Typography variant="h3" align='center'>
-          DND Web App
-        </Typography>
-        <Typography variant="body2" align='center'>
-          ARHGHTHASJDHSOAD
-        </Typography>
-      </div>
-    );
+    if(this.props.user.currentUser){
+      return (
+        <div className={classes.root}>
+          <Typography variant="h2" align="center">Hello, {this.props.user.currentUser.displayName}.</Typography>
+          <Button className={classes.button} variant="outlined" onClick={()=>{this.props.history.push("/character-sheet-view")}}>View your character sheets</Button>
+        </div>
+      );
+    } else {
+      return (
+        <div className={classes.root}>
+          <Typography variant="h2" align="center">Welcome to Terence's DnD App!</Typography>
+          <Button className={classes.button} variant="outlined" onClick={()=>{this.props.history.push("/register")}}>Click here to register</Button>
+        </div>
+      );
+    }
   }
 }
 
-export default withStyles(styles)(LandingPage);
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+const mapDispatchToProps = dispatch => ({
+  setUser: user => dispatch(setUser(user))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(LandingPage)));

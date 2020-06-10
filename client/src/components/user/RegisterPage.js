@@ -15,6 +15,7 @@ import Grid from '@material-ui/core/Grid';
 import { Paper, Typography, IconButton } from '@material-ui/core';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import Link from '@material-ui/core/Link';
 
 
 const validEmailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -226,7 +227,7 @@ class RegisterPage extends React.Component {
         </Typography>
         <form noValidate autoComplete="off">
           
-          <Grid container container
+          <Grid container
             direction="column"
             justify="center"
             alignItems="center"
@@ -263,6 +264,7 @@ class RegisterPage extends React.Component {
             }} 
             error = { this.state.passwordConfirmError!=="" } helperText= { this.state.passwordConfirmError }/>
             <Button variant="contained" color="primary" component="span" size="large" className={classes.textField} onClick={this.submitHandler}>Register</Button>
+            <Link href="/login" color="secondary">Already have an account? Click here.</Link>
           </Grid>
         </form>
       </Paper>

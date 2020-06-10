@@ -5,6 +5,33 @@ import { setUser } from '../../redux/actions/userActions';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import { Paper, Typography, IconButton } from '@material-ui/core';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Link from '@material-ui/core/Link';
+
+const styles = theme => ({
+  root: {
+    padding: '5%',
+    margin: 'auto',
+    marginTop: '4%',
+    width: 800,
+    maxWidth: '90%'
+  },
+  textField: {
+    margin: '2%',
+    width: 400,
+    maxWidth: '90%'
+  },
+})
+
 class LoginPage extends React.Component{
   constructor(props){
     super(props);
@@ -14,6 +41,8 @@ class LoginPage extends React.Component{
       emailError: "",
       passwordError: "",
       overallError: "",
+
+      showPassword: false,
     }
   }
 
@@ -61,6 +90,10 @@ class LoginPage extends React.Component{
     }
   }
 
+  handleClickShowPassword = () => {
+    this.setState({ showPassword: !this.state.showPassword });
+  };
+
   /**
    * This method is used to validate the login form on the client side.
    */
@@ -87,10 +120,40 @@ class LoginPage extends React.Component{
   }
 
   render(){
+    const classes = this.props.classes;
     return (
-        <div>
-
-        </div>
+      <Paper className={classes.root}>
+      <Typography variant="h4" align="center" style={{marginBottom:"10px"}}>
+        Login
+      </Typography>
+      <form noValidate autoComplete="off">
+        
+        <Grid container
+          direction="column"
+          justify="center"
+          alignItems="center"
+        >
+          <FormHelperText error textalign="center">{this.state.overallError}</FormHelperText>
+          <TextField id="email" label="Email" variant="outlined" className={classes.textField} onChange={this.emailChangeHandler}
+          error = { this.state.emailError!=="" } helperText= { this.state.emailError }/>
+          <TextField id="password" label="Password" variant="outlined" className={classes.textField} 
+          type={this.state.showPassword ? 'text' : 'password'} 
+          onChange={this.passwordChangeHandler} 
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="start">
+                <IconButton onClick={this.handleClickShowPassword}>
+                  {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }} 
+          error = { this.state.passwordError!=="" } helperText= { this.state.passwordError }/>
+          <Button type="submit" variant="contained" color="primary" component="span" size="large" className={classes.textField} onClick={this.submitHandler}>Login</Button>
+          <Link href="/register" color="secondary">Don't have an account? Register here!</Link>
+        </Grid>
+      </form>
+    </Paper>
     );
   }
 }
@@ -103,4 +166,4 @@ const mapDispatchToProps = dispatch => ({
   setUser: user => dispatch(setUser(user))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoginPage));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(LoginPage)));
