@@ -26,7 +26,7 @@ initializePassport(passport);
 
 // Express stuff 
 const app = express();
-const port = 5000;
+const port = 80;
 
 app.use((req, res, next) => {
     res.append('Access-Control-Allow-Origin', ['http://localhost:3000']);

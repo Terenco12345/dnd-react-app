@@ -36,20 +36,18 @@ class Header extends React.Component {
 
                 <div className={styles.header}>
                     <a href="/" className={styles.logo}><img src={logo} alt="Logo" /></a>
-                    {this.props.user.currentUser &&
-                        <a href="/current-user" className={styles.user}><i className="fa fa-user" /></a>
-                    }
-
                     <a href="#top" className={styles.menuIcon} onClick={() => { this.toggleMenu() }}>
                         <i className="fa fa-bars" alt="Menu Icon" />
                     </a>
                 </div>
                 {this.state.menuEnabled &&
                     <div className={styles.linkContainer}>
+                        {this.props.user.currentUser ? <p className={styles.loginDisplay}>Logged in as {this.props.user.currentUser.displayName}</p> : 
+                        <p className={styles.loginDisplay}>Not logged in</p>}
                         <a href="/">Home Page</a>
+                        {this.props.user.currentUser && <a href="/profile">My Profile</a>}
                         {!this.props.user.currentUser && <a href="/register">Register</a>}
                         {!this.props.user.currentUser && <a href="/login">Login</a>}
-                        {this.props.user.currentUser && <a href="/profile">My Profile</a>}
                         {this.props.user.currentUser && <a href="/character-sheet-gallery">My Characters</a>}
                         {this.props.user.currentUser && <a href="/#" onClick={this.logOut.bind(this)}>Log out</a>}
                     </div>
