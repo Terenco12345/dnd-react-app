@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from '../../css/form.module.css';
 import axios from 'axios';
 import { serverIP } from '../../config';
 import { setUser } from '../../redux/actions/userActions';
@@ -89,36 +88,8 @@ class LoginPage extends React.Component{
 
   render(){
     return (
-        <div className={styles.root}>
-            <div className={styles.container}>
-              <h1>Login</h1>
-              {this.state.overallError==="" ? null : <h2 className={styles.error}>{this.state.overallError}</h2>}
-              <form onSubmit={this.submitHandler}>
-                <div className={styles.row}>
-                  <div>
-                    {this.state.emailError===""? null : <h2 className={styles.error}>{this.state.emailError}</h2>}
-                    <label htmlFor="email">Email:</label>
-                  </div>
-                  <div>
-                    <input type="text" id="email" value={this.state.email} onChange={this.emailChangeHandler}></input>
-                  </div>
-                </div>
+        <div>
 
-                <div className={styles.row}>
-                  <div>
-                    {this.state.passwordError===""? null : <h2 className={styles.error}>{this.state.passwordError}</h2>}
-                    <label htmlFor="password">Password:</label>
-                  </div>
-                  <div>
-                    <input type="password" id="password" value={this.state.password} onChange={this.passwordChangeHandler}></input>
-                  </div>
-                </div>
-                <a href="/register">Don't have an account? Go here to register!</a>
-                <div className={styles.row}>
-                  <input type="submit" id="login" value="Login"></input>
-                </div>
-              </form>
-            </div>
         </div>
     );
   }

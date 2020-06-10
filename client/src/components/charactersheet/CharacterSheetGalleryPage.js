@@ -7,9 +7,6 @@ import { Redirect } from "react-router-dom";
 class CharacterSheetGalleryPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            redirect: null
-        }
     }
 
     async handleTest(page) {
@@ -29,12 +26,9 @@ class CharacterSheetGalleryPage extends React.Component {
     }
 
     render() {
-        if (this.state.redirect) {
-            return <Redirect to={this.state.redirect}></Redirect>
-        }
         return (
             <div>
-                <button onClick={this.handleTest.bind(this)}>PRESS ME TO TEST</button>
+                
             </div>
         );
     }

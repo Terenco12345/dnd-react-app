@@ -1,6 +1,4 @@
 import React from 'react';
-import styles from '../../css/form.module.css';
-
 import axios from 'axios';
 import { serverIP } from '../../config';
 import { setUser } from '../../redux/actions/userActions';
@@ -24,8 +22,6 @@ class RegisterPage extends React.Component {
       emailError: "",
       passwordError: "",
       passwordConfirmError: "",
-
-      redirect: null
     }
   }
 
@@ -185,57 +181,8 @@ class RegisterPage extends React.Component {
 
   render() {
     return (
-      <div className={styles.root}>
-        <div className={styles.container}>
-          <h1>Register</h1>
-          <form onSubmit={this.submitHandler}>
-            {this.state.overallError === "" ? null : <h2 className={styles.error}>{this.state.overallError}</h2>}
-            <div className={styles.row}>
-              <div>
-                {this.state.displayNameError === "" ? null : <h2 className={styles.error}>{this.state.displayNameError}</h2>}
-                <label htmlFor="displayName">Display Name:</label>
-              </div>
-              <div>
-                <input type="text" id="displayName" value={this.state.displayName} onChange={this.displayNameChangeHandler}></input>
-              </div>
-            </div>
+      <div>
 
-            <div className={styles.row}>
-              <div>
-                {this.state.emailError === "" ? null : <h2 className={styles.error}>{this.state.emailError}</h2>}
-                <label htmlFor="email">Email:</label>
-              </div>
-              <div>
-                <input type="text" id="email" value={this.state.email} onChange={this.emailChangeHandler}></input>
-              </div>
-            </div>
-
-            <div className={styles.row}>
-              <div>
-                {this.state.passwordError === "" ? null : <h2 className={styles.error}>{this.state.passwordError}</h2>}
-                <label htmlFor="password">Password:</label>
-              </div>
-              <div>
-                <input type="password" id="password" value={this.state.password} onChange={this.passwordChangeHandler}></input>
-              </div>
-            </div>
-
-            <div className={styles.row}>
-              <div>
-                {this.state.passwordConfirmError === "" ? null : <h2 className={styles.error}>{this.state.passwordConfirmError}</h2>}
-                <label htmlFor="passwordConfirm">Password Confirmation:</label>
-              </div>
-              <div>
-                <input type="password" id="passwordConfirm" value={this.state.passwordConfirm} onChange={this.passwordConfirmChangeHandler}></input>
-              </div>
-            </div>
-            <a href="/login">Already have an account? Go here!</a>
-            <div className={styles.row}>
-              <input type="submit" id="register" value="Register"></input>
-            </div>
-          </form>
-
-        </div>
       </div>
     );
   }
