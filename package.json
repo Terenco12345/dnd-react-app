@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "lerna bootstrap",
-    "server": "npm --prefix server run server",
+    "server": "npm --prefix server run start",
+    "serverDev": "npm --prefix server run dev",
     "client": "npm --prefix client run start",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": "concurrently \"npm run serverDev\" \"npm run client\"",
     "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
