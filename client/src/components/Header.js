@@ -94,6 +94,7 @@ class Header extends React.Component {
     render() {
         const classes = this.props.classes;
         return (
+<<<<<<< HEAD
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
@@ -201,6 +202,29 @@ class Header extends React.Component {
                         </List>
                     </Drawer>
                 </AppBar>
+=======
+            <div className={styles.headerRoot}>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+
+                <div className={styles.header}>
+                    <a href="/" className={styles.logo}><img src={logo} alt="Logo" /></a>
+                    <a href="#top" className={styles.menuIcon} onClick={() => { this.toggleMenu() }}>
+                        <i className="fa fa-bars" alt="Menu Icon" />
+                    </a>
+                </div>
+                {this.state.menuEnabled &&
+                    <div className={styles.linkContainer}>
+                        {this.props.user.currentUser ? <p className={styles.loginDisplay}>Logged in as {this.props.user.currentUser.displayName}</p> : 
+                        <p className={styles.loginDisplay}>Not logged in</p>}
+                        <a href="/">Home Page</a>
+                        {this.props.user.currentUser && <a href="/profile">My Profile</a>}
+                        {!this.props.user.currentUser && <a href="/register">Register</a>}
+                        {!this.props.user.currentUser && <a href="/login">Login</a>}
+                        {this.props.user.currentUser && <a href="/character-sheet-gallery">My Characters</a>}
+                        {this.props.user.currentUser && <a href="/#" onClick={this.logOut.bind(this)}>Log out</a>}
+                    </div>
+                }
+>>>>>>> origin/master
             </div>
         );
     }
