@@ -14,11 +14,7 @@ import ProfilePage from "./components/user/ProfilePage";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import CharacterSheetGalleryPage from "./components/charactersheet/CharacterSheetGalleryPage";
-<<<<<<< HEAD
 import { purple, deepPurple, indigo, lightBlue } from '@material-ui/core/colors';
-=======
-import ProfilePage from "./components/user/ProfilePage";
->>>>>>> origin/master
 
 function App() {
   const [theme, setTheme] = useState({
@@ -69,16 +65,8 @@ function App() {
           <Route exact path="/login">
             <LoginPage />
           </Route>
-<<<<<<< HEAD
-          <Route path="/current-user">
-            <CharacterSheetGalleryPage />
-=======
-          <Route exact path="/profile">
-            <ProfilePage/>
->>>>>>> origin/master
-          </Route>
-          <Route path="/character-sheet-gallery">
-            <CharacterSheetGalleryPage />
+          <Route exact path="/character-sheet-gallery">
+            <CharacterSheetGalleryPage/>
           </Route>
         </Switch>
         <Footer />
