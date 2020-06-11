@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {
@@ -11,6 +10,7 @@ import {
 import LandingPage from "./components/landing/LandingPage";
 import RegisterPage from './components/user/RegisterPage';
 import LoginPage from './components/user/LoginPage';
+import ProfilePage from "./components/user/ProfilePage";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import CharacterSheetGalleryPage from "./components/charactersheet/CharacterSheetGalleryPage";
@@ -19,7 +19,9 @@ import { purple, deepPurple, indigo, lightBlue } from '@material-ui/core/colors'
 function App() {
   const [theme, setTheme] = useState({
     palette: {
-      type: "light"
+      type: "light",
+      primary: purple,
+      secondary: deepPurple
     }
   });
 
@@ -53,6 +55,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <LandingPage />
+          </Route>
+          <Route exact path="/profile">
+            <ProfilePage />
           </Route>
           <Route exact path="/register">
             <RegisterPage />

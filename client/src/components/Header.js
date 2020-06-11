@@ -63,7 +63,7 @@ class Header extends React.Component {
             withCredentials: true,
             url: serverIP + '/current-user'
         }).then((res) => {
-            this.props.setUser({ displayName: res.data.user.displayName, email: res.data.user.email });
+            this.props.setUser(res.data.user);
         }).catch((err) => {
             if (err) {
                 console.log("User not found in header.");

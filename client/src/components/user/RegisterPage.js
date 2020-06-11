@@ -3,7 +3,7 @@ import axios from 'axios';
 import { serverIP } from '../../config';
 import { setUser } from '../../redux/actions/userActions';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -63,7 +63,7 @@ class RegisterPage extends React.Component {
       url: serverIP + '/current-user'
     }).then((res) => {
       console.log("Successfully authenticated user.");
-      this.setState({ redirect: "/current-user" });
+      this.props.history.push("/profile")
     }).catch((err) => {
       if (err) {
         this.setState({ redirect: null });
@@ -133,8 +133,8 @@ class RegisterPage extends React.Component {
           }
         }).then((res) => {
           // Redirect to current-user
-          this.props.setUser(res.data);
-          this.props.history.push('/current-user');
+          this.props.setUser(res.data.user);
+          this.props.history.push('/');
         }).catch((err) => {
           if (err) {
             if (err.response !== undefined) {
@@ -220,6 +220,11 @@ class RegisterPage extends React.Component {
 
   render() {
     const classes = this.props.classes;
+
+    if(this.props.user.currentUser){
+      return (<Redirect to="/"></Redirect>);
+    }
+
     return (
       <Paper className={classes.root}>
         <Typography variant="h4" align="center" style={{marginBottom:"10px"}}>

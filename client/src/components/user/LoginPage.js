@@ -3,7 +3,7 @@ import axios from 'axios';
 import { serverIP } from '../../config';
 import { setUser } from '../../redux/actions/userActions';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -76,7 +76,7 @@ class LoginPage extends React.Component{
         }
       }).then((res)=>{
         // Redirect to current-user
-        this.props.setUser(res.data);
+        this.props.setUser(res.data.user);
         this.props.history.push('/');
       }).catch((err)=>{
         if(err){
@@ -121,6 +121,11 @@ class LoginPage extends React.Component{
 
   render(){
     const classes = this.props.classes;
+
+    if(this.props.user.currentUser){
+      return (<Redirect to="/"></Redirect>);
+    }
+
     return (
       <Paper className={classes.root}>
       <Typography variant="h4" align="center" style={{marginBottom:"10px"}}>
