@@ -1,14 +1,40 @@
 import React from 'react';
-import styles from '../../css/form.module.css';
-
 import axios from 'axios';
 import { serverIP } from '../../config';
 import { setUser } from '../../redux/actions/userActions';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
+
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import { Paper, Typography, IconButton } from '@material-ui/core';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Link from '@material-ui/core/Link';
+
 
 const validEmailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const validPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
+
+const styles = theme => ({
+  root: {
+    padding: '5%',
+    margin: 'auto',
+    marginTop: '4%',
+    width: 800,
+    maxWidth: '90%'
+  },
+  textField: {
+    margin: '2%',
+    width: 400,
+    maxWidth: '90%'
+  },
+})
 
 class RegisterPage extends React.Component {
   constructor(props) {
@@ -25,7 +51,8 @@ class RegisterPage extends React.Component {
       passwordError: "",
       passwordConfirmError: "",
 
-      redirect: null
+      showPassword: false,
+      showPasswordConfirm: false
     }
   }
 
@@ -36,7 +63,7 @@ class RegisterPage extends React.Component {
       url: serverIP + '/current-user'
     }).then((res) => {
       console.log("Successfully authenticated user.");
-      this.setState({ redirect: "/current-user" });
+      this.props.history.push("/profile")
     }).catch((err) => {
       if (err) {
         this.setState({ redirect: null });
@@ -106,8 +133,8 @@ class RegisterPage extends React.Component {
           }
         }).then((res) => {
           // Redirect to current-user
-          this.props.setUser(res.data);
-          this.props.history.push('/current-user');
+          this.props.setUser(res.data.user);
+          this.props.history.push('/');
         }).catch((err) => {
           if (err) {
             if (err.response !== undefined) {
@@ -183,60 +210,69 @@ class RegisterPage extends React.Component {
     return valid;
   }
 
+  handleClickShowPassword = () => {
+    this.setState({ showPassword: !this.state.showPassword });
+  };
+
+  handleClickShowPasswordConfirm = () => {
+    this.setState({ showPasswordConfirm: !this.state.showPasswordConfirm });
+  };
+
   render() {
+    const classes = this.props.classes;
+
+    if(this.props.user.currentUser){
+      return (<Redirect to="/"></Redirect>);
+    }
+
     return (
-      <div className={styles.root}>
-        <div className={styles.container}>
-          <h1>Register</h1>
-          <form onSubmit={this.submitHandler}>
-            {this.state.overallError === "" ? null : <h2 className={styles.error}>{this.state.overallError}</h2>}
-            <div className={styles.row}>
-              <div>
-                {this.state.displayNameError === "" ? null : <h2 className={styles.error}>{this.state.displayNameError}</h2>}
-                <label htmlFor="displayName">Display Name:</label>
-              </div>
-              <div>
-                <input type="text" id="displayName" value={this.state.displayName} onChange={this.displayNameChangeHandler}></input>
-              </div>
-            </div>
-
-            <div className={styles.row}>
-              <div>
-                {this.state.emailError === "" ? null : <h2 className={styles.error}>{this.state.emailError}</h2>}
-                <label htmlFor="email">Email:</label>
-              </div>
-              <div>
-                <input type="text" id="email" value={this.state.email} onChange={this.emailChangeHandler}></input>
-              </div>
-            </div>
-
-            <div className={styles.row}>
-              <div>
-                {this.state.passwordError === "" ? null : <h2 className={styles.error}>{this.state.passwordError}</h2>}
-                <label htmlFor="password">Password:</label>
-              </div>
-              <div>
-                <input type="password" id="password" value={this.state.password} onChange={this.passwordChangeHandler}></input>
-              </div>
-            </div>
-
-            <div className={styles.row}>
-              <div>
-                {this.state.passwordConfirmError === "" ? null : <h2 className={styles.error}>{this.state.passwordConfirmError}</h2>}
-                <label htmlFor="passwordConfirm">Password Confirmation:</label>
-              </div>
-              <div>
-                <input type="password" id="passwordConfirm" value={this.state.passwordConfirm} onChange={this.passwordConfirmChangeHandler}></input>
-              </div>
-            </div>
-            <a href="/login">Already have an account? Go here!</a>
-            <div className={styles.row}>
-              <input type="submit" id="register" value="Register"></input>
-            </div>
-          </form>
-
-        </div>
-      </div>
+      <Paper className={classes.root}>
+        <Typography variant="h4" align="center" style={{marginBottom:"10px"}}>
+          Register new account
+        </Typography>
+        <form noValidate autoComplete="off">
+          
+          <Grid container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <FormHelperText error textalign="center">{this.state.overallError}</FormHelperText>
+            <TextField id="displayName" label="Display Name" variant="outlined" className={classes.textField} onChange={this.displayNameChangeHandler}
+            error = { this.state.displayNameError!=="" } helperText= { this.state.displayNameError }/>
+            <TextField id="email" label="Email" variant="outlined" className={classes.textField} onChange={this.emailChangeHandler}
+            error = { this.state.emailError!=="" } helperText= { this.state.emailError }/>
+            <TextField id="password" label="Password" variant="outlined" className={classes.textField} 
+            type={this.state.showPassword ? 'text' : 'password'} 
+            onChange={this.passwordChangeHandler} 
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="start">
+                  <IconButton onClick={this.handleClickShowPassword}>
+                    {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }} 
+            error = { this.state.passwordError!=="" } helperText= { this.state.passwordError }/>
+            <TextField id="passwordConfirm" label="Confirm Password" variant="outlined" className={classes.textField} 
+            type={this.state.showPasswordConfirm ? 'text' : 'password'} 
+            onChange={this.passwordConfirmChangeHandler} 
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="start">
+                  <IconButton onClick={this.handleClickShowPasswordConfirm}>
+                    {this.state.showPasswordConfirm ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }} 
+            error = { this.state.passwordConfirmError!=="" } helperText= { this.state.passwordConfirmError }/>
+            <Button variant="contained" color="primary" component="span" size="large" className={classes.textField} onClick={this.submitHandler}>Register</Button>
+            <Link href="/login" color="secondary">Already have an account? Click here.</Link>
+          </Grid>
+        </form>
+      </Paper>
     );
   }
 }
@@ -249,4 +285,4 @@ const mapDispatchToProps = dispatch => ({
   setUser: user => dispatch(setUser(user))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RegisterPage));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(RegisterPage)));

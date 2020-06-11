@@ -1,10 +1,36 @@
 import React from 'react';
-import styles from '../../css/form.module.css';
 import axios from 'axios';
 import { serverIP } from '../../config';
 import { setUser } from '../../redux/actions/userActions';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
+
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import { Paper, Typography, IconButton } from '@material-ui/core';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Link from '@material-ui/core/Link';
+
+const styles = theme => ({
+  root: {
+    padding: '5%',
+    margin: 'auto',
+    marginTop: '4%',
+    width: 800,
+    maxWidth: '90%'
+  },
+  textField: {
+    margin: '2%',
+    width: 400,
+    maxWidth: '90%'
+  },
+})
 
 class LoginPage extends React.Component{
   constructor(props){
@@ -15,6 +41,8 @@ class LoginPage extends React.Component{
       emailError: "",
       passwordError: "",
       overallError: "",
+
+      showPassword: false,
     }
   }
 
@@ -48,7 +76,7 @@ class LoginPage extends React.Component{
         }
       }).then((res)=>{
         // Redirect to current-user
-        this.props.setUser(res.data);
+        this.props.setUser(res.data.user);
         this.props.history.push('/');
       }).catch((err)=>{
         if(err){
@@ -61,6 +89,10 @@ class LoginPage extends React.Component{
       console.log("Login UI: Client side validation of form details failed.");
     }
   }
+
+  handleClickShowPassword = () => {
+    this.setState({ showPassword: !this.state.showPassword });
+  };
 
   /**
    * This method is used to validate the login form on the client side.
@@ -88,38 +120,45 @@ class LoginPage extends React.Component{
   }
 
   render(){
-    return (
-        <div className={styles.root}>
-            <div className={styles.container}>
-              <h1>Login</h1>
-              {this.state.overallError==="" ? null : <h2 className={styles.error}>{this.state.overallError}</h2>}
-              <form onSubmit={this.submitHandler}>
-                <div className={styles.row}>
-                  <div>
-                    {this.state.emailError===""? null : <h2 className={styles.error}>{this.state.emailError}</h2>}
-                    <label htmlFor="email">Email:</label>
-                  </div>
-                  <div>
-                    <input type="text" id="email" value={this.state.email} onChange={this.emailChangeHandler}></input>
-                  </div>
-                </div>
+    const classes = this.props.classes;
 
-                <div className={styles.row}>
-                  <div>
-                    {this.state.passwordError===""? null : <h2 className={styles.error}>{this.state.passwordError}</h2>}
-                    <label htmlFor="password">Password:</label>
-                  </div>
-                  <div>
-                    <input type="password" id="password" value={this.state.password} onChange={this.passwordChangeHandler}></input>
-                  </div>
-                </div>
-                <a href="/register">Don't have an account? Go here to register!</a>
-                <div className={styles.row}>
-                  <input type="submit" id="login" value="Login"></input>
-                </div>
-              </form>
-            </div>
-        </div>
+    if(this.props.user.currentUser){
+      return (<Redirect to="/"></Redirect>);
+    }
+
+    return (
+      <Paper className={classes.root}>
+      <Typography variant="h4" align="center" style={{marginBottom:"10px"}}>
+        Login
+      </Typography>
+      <form noValidate autoComplete="off">
+        
+        <Grid container
+          direction="column"
+          justify="center"
+          alignItems="center"
+        >
+          <FormHelperText error textalign="center">{this.state.overallError}</FormHelperText>
+          <TextField id="email" label="Email" variant="outlined" className={classes.textField} onChange={this.emailChangeHandler}
+          error = { this.state.emailError!=="" } helperText= { this.state.emailError }/>
+          <TextField id="password" label="Password" variant="outlined" className={classes.textField} 
+          type={this.state.showPassword ? 'text' : 'password'} 
+          onChange={this.passwordChangeHandler} 
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="start">
+                <IconButton onClick={this.handleClickShowPassword}>
+                  {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }} 
+          error = { this.state.passwordError!=="" } helperText= { this.state.passwordError }/>
+          <Button type="submit" variant="contained" color="primary" component="span" size="large" className={classes.textField} onClick={this.submitHandler}>Login</Button>
+          <Link href="/register" color="secondary">Don't have an account? Register here!</Link>
+        </Grid>
+      </form>
+    </Paper>
     );
   }
 }
@@ -132,4 +171,4 @@ const mapDispatchToProps = dispatch => ({
   setUser: user => dispatch(setUser(user))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoginPage));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(LoginPage)));

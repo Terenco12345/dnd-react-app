@@ -43,7 +43,7 @@ module.exports = function initializePassport(passport){
     passport.use(new LocalStrategy({usernameField: 'email', session: false}, 
     authenticateUserLocal));
     passport.use(new JwtStrategy({secretOrKey: config.jwt.secret, jwtFromRequest: cookieExtractor}, (payload, done) => {
-        console.log(payload);
+        console.log(payload.user.displayName+" has been authenticated");
         return done(null, payload);
     }));
 }
