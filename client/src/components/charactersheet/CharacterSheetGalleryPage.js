@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import { serverIP } from '../../config';
 import { withRouter } from 'react-router-dom';
 
 class CharacterSheetGalleryPage extends React.Component {
@@ -12,7 +11,7 @@ class CharacterSheetGalleryPage extends React.Component {
         console.log("Sending test request for resource...");
         await axios({
             method: 'get',
-            url: serverIP + '/character-sheet-gallery/test',
+            url: process.env.SERVER_IP + '/character-sheet-gallery/test',
             withCredentials: true
         }).then((res) => {
             console.log(res);

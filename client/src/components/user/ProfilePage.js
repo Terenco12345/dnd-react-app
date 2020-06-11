@@ -15,7 +15,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
-import { serverIP } from '../../config';
 import { Paper, Menu, Grid, Divider } from '@material-ui/core';
 
 import avatars from '../../avatars';
@@ -77,7 +76,7 @@ class ProfilePage extends React.Component {
         axios({
             method: 'post',
             withCredentials: true,
-            url: serverIP + '/current-user/avatar',
+            url: process.env.REACT_APP_SERVER_IP + '/current-user/avatar',
             headers: {'content-type': 'application/json'},
             data: {avatarSelection: index}
         }).then((res) => {

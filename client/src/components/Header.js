@@ -2,7 +2,6 @@ import React from 'react';
 import { setUser } from '../redux/actions/userActions';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { serverIP } from '../config';
 import { withRouter } from 'react-router';
 
 import { withStyles } from '@material-ui/styles'
@@ -61,7 +60,7 @@ class Header extends React.Component {
         await axios({
             method: 'get',
             withCredentials: true,
-            url: serverIP + '/current-user'
+            url: process.env.REACT_APP_SERVER_IP + '/current-user'
         }).then((res) => {
             this.props.setUser(res.data.user);
         }).catch((err) => {
@@ -215,7 +214,7 @@ class Header extends React.Component {
         await axios({
             method: 'post',
             withCredentials: true,
-            url: serverIP + '/logout'
+            url: process.env.SERVER_IP + '/logout'
         }).then((res) => {
             console.log("Successfully logged out user.");
             this.props.setUser(null);

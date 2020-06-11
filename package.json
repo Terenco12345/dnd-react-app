@@ -7,7 +7,8 @@
     "postinstall": "lerna bootstrap",
     "server": "npm --prefix server run server",
     "client": "npm --prefix client run start",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",

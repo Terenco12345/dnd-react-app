@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import { serverIP } from '../../config';
 import { setUser } from '../../redux/actions/userActions';
 import { connect } from 'react-redux';
 import { withRouter, Redirect } from 'react-router-dom';
@@ -60,7 +59,7 @@ class RegisterPage extends React.Component {
     axios({
       method: 'get',
       withCredentials: true,
-      url: serverIP + '/current-user'
+      url: process.env.REACT_APP_SERVER_IP + '/current-user'
     }).then((res) => {
       console.log("Successfully authenticated user.");
       this.props.history.push("/profile")
@@ -104,7 +103,7 @@ class RegisterPage extends React.Component {
       // Send register request
       await axios({
         method: 'post',
-        url: serverIP + '/register',
+        url: process.env.REACT_APP_SERVER_IP + '/register',
         data: {
           displayName: this.state.displayName,
           email: this.state.email,
@@ -126,7 +125,7 @@ class RegisterPage extends React.Component {
         await axios({
           method: 'post',
           withCredentials: true,
-          url: serverIP + '/login',
+          url: process.env.REACT_APP_SERVER_IP + '/login',
           data: {
             email: this.state.email,
             password: this.state.password,
