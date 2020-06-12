@@ -20,6 +20,7 @@ mongoose.connection.once('open', function() {
 
 mongoose.connect(mongoURI, {useNewUrlParser: true, useUnifiedTopology:true});
 require("./models/User");
+require("./models/CharacterSheet");
 
 // Passport stuff
 initializePassport(passport);
