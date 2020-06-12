@@ -120,7 +120,7 @@ class Header extends React.Component {
                                     onClick={this.handleMenu}
                                     color="inherit"
                                 >
-                                    <Avatar src={avatars[this.props.user.currentUser.avatar]}></Avatar>
+                                    <Avatar src={avatars.profile[this.props.user.currentUser.avatar]}></Avatar>
                                 </IconButton>
                                 <Menu
                                     id="menu-appbar"
@@ -164,7 +164,7 @@ class Header extends React.Component {
                         <List className={classes.list}>
                             {this.props.user.currentUser ? (
                                 <div>
-                                    <Avatar className={classes.drawerAvatar} src={avatars[this.props.user.currentUser.avatar]}></Avatar>
+                                    <Avatar className={classes.drawerAvatar} src={avatars.profile[this.props.user.currentUser.avatar]}></Avatar>
                                     <div className={classes.userDisplay}>
                                         <Typography variant="body1" align="center">Logged in as {this.props.user.currentUser.displayName}</Typography>
                                     </div>

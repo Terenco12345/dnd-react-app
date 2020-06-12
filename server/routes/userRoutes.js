@@ -4,8 +4,6 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const User = mongoose.model("users");
 const config = require("../auth");
-var multer = require('multer')
-var upload = multer({ dest: 'uploads/' })
 
 module.exports = function (app) {
     app.post('/register', async (req, res) => {
@@ -103,7 +101,7 @@ module.exports = function (app) {
         })(req, res, next);
     });
 
-    app.post("/current-user/avatar", upload.single('avatar'), (req, res, next) => {
+    app.post("/current-user/avatar", (req, res, next) => {
         passport.authenticate('jwt', async (err, tokenContent, info) => {
             if (err) {
                 res.status(500).send(err);
