@@ -1,13 +1,11 @@
-import React from 'react';
-import axios from 'axios';
-import { withRouter } from 'react-router-dom';
 import { Button, Typography, Grid, IconButton, TextField, Card, CardMedia, CardActionArea, CardContent, CardActions, Divider, InputAdornment } from '@material-ui/core';
-
-
+import { withRouter } from 'react-router-dom';
+import { withStyles } from '@material-ui/styles';
 import AddIcon from '@material-ui/icons/Add';
+import axios from 'axios';
+import React from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 
-import { withStyles } from '@material-ui/styles';
 import avatars from '../../avatars';
 
 const styles = theme => ({
