@@ -1,6 +1,6 @@
 import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import React, { useState } from 'react';
+import React from 'react';
 
 import {
   BrowserRouter,
@@ -18,6 +18,7 @@ import CharacterSheetGalleryPage from "./components/charactersheet/CharacterShee
 import { purple, deepPurple, indigo, lightBlue } from '@material-ui/core/colors';
 import { setUser, setLightMode } from './redux/actions/actions';
 import { connect } from 'react-redux';
+import CharacterSheetPage from './components/charactersheet/CharacterSheetPage';
 
 // Light theme, for people in light mode
 const lightTheme = {
@@ -66,6 +67,9 @@ class App extends React.Component {
             </Route>
             <Route exact path="/character-sheet-gallery">
               <CharacterSheetGalleryPage />
+            </Route>
+            <Route path="/character-sheet/:id">
+              <CharacterSheetPage/>
             </Route>
           </Switch>
           <Footer />

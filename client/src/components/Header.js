@@ -175,7 +175,7 @@ class Header extends React.Component {
                         }
                     </Toolbar>
 
-                    <SideDrawer handleDrawerClose={this.handleDrawerClose.bind(this)} open={this.state.leftDrawerOpen}></SideDrawer>
+                    <SideDrawer handleDrawerClose={this.handleDrawerClose.bind(this)} open={this.state.leftDrawerOpen} handleLogOutClick={this.logOut.bind(this)}></SideDrawer>
                 </AppBar>
             </div>
         );

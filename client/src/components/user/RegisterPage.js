@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Paper, Typography, IconButton, TextField, Link, InputAdornment, Grid, FormHelperText, Button } from '@material-ui/core';
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import React from 'react';

@@ -11,7 +11,7 @@ const characterSheetSchema = new mongoose.Schema({
     },
     characterName: {
         type: String,
-        default: "Normal McDefault"
+        default: ""
     },
     experience: {
         type: Number,
@@ -25,9 +25,14 @@ const characterSheetSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
-    classes: [{
+    class: {
         type: String,
-    }],
+        default: ""
+    },
+    alignment: {
+        type: String,
+        default: ""
+    },
     armourClass: {
         type: Number,
         default: 0
@@ -156,20 +161,21 @@ const characterSheetSchema = new mongoose.Schema({
             default: false
         },
     },
-    featuresSpellsTraits: {
-        type: Map,
-        of: String
-    },
-    proficiencies: [{
-        type: String
+    featsAndSpells: [{
+        type: Object,
     }],
-    equipment: {
-        type: Map,
-        of: String
+    proficiencies: {
+        type: String,
+        default: ""
     },
-    description: [{
-        type: String
-    }]
+    equipment: {
+        type: String,
+        default: ""
+    },
+    description: {
+        type: String,
+        default: ""
+    }
 });
 
 module.exports = mongoose.model("characterSheets", characterSheetSchema);
