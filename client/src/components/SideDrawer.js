@@ -49,9 +49,6 @@ const styles = theme => ({
  * - handleDrawerClose = Function called when 'closing' action performed, such as clicking outside of the bar
  */
 class SideDrawer extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         const classes = this.props.classes;
@@ -82,7 +79,7 @@ class SideDrawer extends React.Component {
                                 <ListItemIcon><AssignmentIndOutlinedIcon /></ListItemIcon>
                                 <ListItemText>My Character Sheets</ListItemText>
                             </ListItem>
-                            <ListItem button onClick={() => { this.handleLogoutClick(); this.props.handleDrawerClose() }}>
+                            <ListItem button onClick={() => { this.props.handleLogOutClick(); this.props.handleDrawerClose() }}>
                                 <ListItemIcon><ExitToAppOutlinedIcon /></ListItemIcon>
                                 <ListItemText>Log Out</ListItemText>
                             </ListItem>
