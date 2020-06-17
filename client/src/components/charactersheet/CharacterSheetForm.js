@@ -21,7 +21,9 @@ import {
 } from '@material-ui/core';
 
 import { connect } from 'react-redux';
-import { setUser } from './../../redux/actions/actions';
+import { fetchCurrentUser } from '../../redux/actions/userActions';
+import { setLightMode } from '../../redux/actions/lightModeActions';
+import { bindActionCreators } from 'redux';
 
 const styles = (theme) => ({
     container: {
@@ -33,10 +35,10 @@ const styles = (theme) => ({
 class CharacterSheetForm extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {...props.formSheet, detailsError: ""};
+        this.state = { ...props.formSheet, detailsError: "" };
     }
 
-    componentDidUpdate(){
+    componentDidUpdate() {
         console.log(this.state)
     }
 
@@ -157,9 +159,9 @@ class CharacterSheetForm extends React.Component {
         return characterSheet;
     }
 
-    checkIfEmpty(){
-        if(this.state.characterName === ""){
-            this.setState({detailsError: "Please fill in the character name."})
+    checkIfEmpty() {
+        if (this.state.characterName === "") {
+            this.setState({ detailsError: "Please fill in the character name." })
             return false;
         } else {
             return true;
@@ -173,7 +175,7 @@ class CharacterSheetForm extends React.Component {
                 <div className={classes.container}>
                     <Typography variant="h3">{this.props.type} a character</Typography>
                     <Divider></Divider>
-                    
+
                     <Typography variant="h5" style={{ marginTop: 50 }}> Details </Typography>
                     <Grid container
                         spacing={2}
@@ -253,9 +255,9 @@ class CharacterSheetForm extends React.Component {
                                 type="number"
                                 value={this.state.health.maxHealth}
                                 style={{ maxWidth: 80 }}
-                                onChange={(event) => { 
+                                onChange={(event) => {
                                     var newValue = parseInt(event.target.value);
-                                    this.setState((initialState)=>({ health: {...initialState.health, maxHealth: newValue }}))
+                                    this.setState((initialState) => ({ health: { ...initialState.health, maxHealth: newValue } }))
                                 }}
                             />
                         </Grid>
@@ -275,7 +277,7 @@ class CharacterSheetForm extends React.Component {
                                     value={this.state.hitDice.hitDiceType}
                                     onChange={(event) => {
                                         var newValue = parseInt(event.target.value);
-                                        this.setState((initialState)=>({ hitDice: {...initialState.hitDice, hitDiceType: newValue}}))
+                                        this.setState((initialState) => ({ hitDice: { ...initialState.hitDice, hitDiceType: newValue } }))
                                     }}
                                 >
                                     <MenuItem value={4}>D4</MenuItem>
@@ -302,9 +304,9 @@ class CharacterSheetForm extends React.Component {
                                     type="number"
                                     value={this.state.stats[stat]}
                                     style={{ maxWidth: 80 }}
-                                    onChange={(event) => { 
+                                    onChange={(event) => {
                                         var newValue = parseInt(event.target.value);
-                                        this.setState((initialState)=>({ stats: {...initialState.stats, [stat]: newValue}}));
+                                        this.setState((initialState) => ({ stats: { ...initialState.stats, [stat]: newValue } }));
                                     }}
                                 />
                             </Grid>
@@ -328,9 +330,9 @@ class CharacterSheetForm extends React.Component {
                                 <FormControlLabel
                                     control={
                                         <Checkbox checked={this.state.skills[skill]}
-                                            onChange={(event) => { 
+                                            onChange={(event) => {
                                                 var newValue = event.target.checked;
-                                                this.setState((initialState)=>({ skills: {...initialState.skills, [skill]: newValue }}))
+                                                this.setState((initialState) => ({ skills: { ...initialState.skills, [skill]: newValue } }))
                                             }}
                                             name={skill}
                                         />
@@ -396,14 +398,14 @@ class CharacterSheetForm extends React.Component {
                         <Grid item>
                             <Button
                                 onClick={() => {
-                                    if(this.checkIfEmpty()){
+                                    if (this.checkIfEmpty()) {
                                         if (this.state._id === null) {
                                             this.createNewCharacterSheet();
                                         } else {
                                             this.editCharacterSheet();
                                         }
                                         this.props.handleClose();
-                                    }     
+                                    }
                                 }}
                                 color="primary"
                                 variant="contained"
@@ -476,8 +478,9 @@ const mapStateToProps = state => ({
     user: state.user
 })
 
-const mapDispatchToProps = dispatch => ({
-    setUser: user => dispatch(setUser(user))
-})
+const mapDispatchToProps = dispatch => bindActionCreators({
+    fetchCurrentUser: fetchCurrentUser,
+    setLightMode: setLightMode
+}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(CharacterSheetForm)));

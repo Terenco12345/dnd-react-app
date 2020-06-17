@@ -5,7 +5,8 @@ import Button from "@material-ui/core/Button";
 import React from 'react';
 import Typography from "@material-ui/core/Typography";
 
-import { setUser } from '../../redux/actions/actions';
+import { bindActionCreators } from 'redux';
+import { fetchCurrentUser } from './../../redux/actions/userActions';
 
 const styles = theme => ({
   root: {
@@ -48,8 +49,8 @@ const mapStateToProps = state => ({
   user: state.user
 })
 
-const mapDispatchToProps = dispatch => ({
-  setUser: user => dispatch(setUser(user))
-})
+const mapDispatchToProps = dispatch => bindActionCreators({
+  fetchCurrentUser: fetchCurrentUser
+}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(LandingPage)));

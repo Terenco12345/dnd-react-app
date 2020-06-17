@@ -8,8 +8,9 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import CharacterSheetForm from './CharacterSheetForm';
 import avatars from '../../avatars';
-import { setUser } from './../../redux/actions/actions';
 import { connect } from 'react-redux';
+import { fetchCurrentUser } from './../../redux/actions/userActions';
+import { bindActionCreators } from 'redux';
 
 const styles = theme => ({
     root: {
@@ -317,8 +318,8 @@ const mapStateToProps = state => ({
     user: state.user
 })
   
-const mapDispatchToProps = dispatch => ({
-    setUser: user => dispatch(setUser(user))
-})
-  
+const mapDispatchToProps = dispatch => bindActionCreators({
+    fetchCurrentUser: fetchCurrentUser,
+}, dispatch)
+
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(CharacterSheetGalleryPage)));
