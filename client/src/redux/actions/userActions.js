@@ -105,6 +105,7 @@ const logoutCurrentUserActionCreator = {
     }
 }
 
+// Thunks for updateCurrentUser
 const updateCurrentUserActionCreator = {
     pending: () => {
         return {

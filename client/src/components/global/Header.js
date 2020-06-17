@@ -93,11 +93,9 @@ class Header extends React.Component {
                                 <div>
                                     <Button color="inherit" className={classes.login} onClick={() => {
                                         this.props.history.push("/register");
-                                        this.handleClose();
                                     }}>Register</Button>
                                     <Button color="inherit" className={classes.login} onClick={() => {
                                         this.props.history.push("/login");
-                                        this.handleClose();
                                     }}>Login</Button>
                                 </div>
                             )
