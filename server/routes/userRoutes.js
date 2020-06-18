@@ -6,7 +6,7 @@ const User = mongoose.model("users");
 const config = require("../auth");
 
 module.exports = function (app) {
-    app.post('/register', async (req, res) => {
+    app.post('/user/register', async (req, res) => {
         const displayName = req.body.displayName;
         const email = req.body.email;
         const password = req.body.password;
@@ -28,12 +28,12 @@ module.exports = function (app) {
                 res.status(400).send("User already exists with this email.");
             } else {
                 console.log("Creating user...")
-                res.status(201).send();
+                res.status(201).send({user: user});
             }
         });
     });
 
-    app.post('/login', async function (req, res, next) {
+    app.post('/user/login', async function (req, res, next) {
         passport.authenticate('local', function (err, user, info) {
             if (err) {    // Internal server error
                 res.status(500).send(err);
@@ -62,7 +62,7 @@ module.exports = function (app) {
         })(req, res, next)
     });
 
-    app.post("/logout", (req, res, next) => {
+    app.post("/user/logout", (req, res, next) => {
         passport.authenticate('jwt', (err, user, info) => {
             if (err) {
                 res.status(500).send(err);
@@ -77,14 +77,13 @@ module.exports = function (app) {
         })(req, res, next);
     });
 
-    app.get("/current-user", (req, res, next) => {
+    app.get("/user/current-user", (req, res, next) => {
         passport.authenticate('jwt', async (err, tokenContent, info) => {
             if (err) {
                 res.status(500).send(err);
             } else if (info) {
                 res.status(401).send(info);
             } else if (tokenContent) {
-                console.log(tokenContent.user.email);
                 await User.findOne({ email: tokenContent.user.email }).then((user) => {
                     res.send({
                         user: {
@@ -101,7 +100,7 @@ module.exports = function (app) {
         })(req, res, next);
     });
 
-    app.post("/current-user/avatar", (req, res, next) => {
+    app.post("/user/current-user", (req, res, next) => {
         passport.authenticate('jwt', async (err, tokenContent, info) => {
             if (err) {
                 res.status(500).send(err);
@@ -110,12 +109,12 @@ module.exports = function (app) {
                 res.status(401).send(info);
             }
             if (tokenContent) {
-                await User.findOneAndUpdate({email: tokenContent.user.email}, {avatar: req.body.avatarSelection}).then((user)=>{
+                await User.findOneAndUpdate({email: tokenContent.user.email}, req.body, {new: true}).then((user)=>{
                     res.send({
                         user: {
                             email: user.email,
                             displayName: user.displayName,
-                            avatar: req.body.avatarSelection,
+                            avatar: user.avatar,
                             bio: user.bio
                         }
                     });
