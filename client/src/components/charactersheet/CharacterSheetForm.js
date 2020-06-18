@@ -18,12 +18,14 @@ import {
     Checkbox,
     Dialog,
     FormHelperText,
+    CircularProgress,
 } from '@material-ui/core';
 
 import { connect } from 'react-redux';
 import { fetchCurrentUser } from '../../redux/actions/userActions';
 import { setLightMode } from '../../redux/actions/lightModeActions';
 import { bindActionCreators } from 'redux';
+import { createCharacterSheetForCurrentUser, updateCharacterSheetForCurrentUser } from './../../redux/actions/characterSheetActions';
 
 const styles = (theme) => ({
     container: {
@@ -35,7 +37,7 @@ const styles = (theme) => ({
 class CharacterSheetForm extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { ...props.formSheet, detailsError: "" };
+        this.state = { ...props.formSheet, detailsError: "", started: false };
     }
 
     componentDidUpdate() {
@@ -50,24 +52,6 @@ class CharacterSheetForm extends React.Component {
             method: 'post',
             withCredentials: true,
             url: process.env.REACT_APP_SERVER_IP + '/character-sheet/new',
-            headers: { 'content-type': 'application/json' },
-            data: this.createCharacterSheetFromState()
-        }).then((res) => {
-            console.log(res);
-            this.props.refreshCharacterSheets();
-        }).catch((err) => {
-            console.log(err);
-        });
-    }
-
-    /**
-     * Sends a request to edit new character sheet at POST /character-sheet/new.
-     */
-    editCharacterSheet() {
-        axios({
-            method: 'post',
-            withCredentials: true,
-            url: process.env.REACT_APP_SERVER_IP + '/character-sheet/' + this.state._id,
             headers: { 'content-type': 'application/json' },
             data: this.createCharacterSheetFromState()
         }).then((res) => {
@@ -168,8 +152,15 @@ class CharacterSheetForm extends React.Component {
         }
     }
 
+    componentDidUpdate(){
+        if(this.state.started && !(this.props.sheet.createPending || this.props.sheet.editPending )){
+            this.props.handleClose();
+        }
+    }
+
     render() {
         const classes = this.props.classes;
+
         return (
             <Dialog elevation={6} open={true}>
                 <div className={classes.container}>
@@ -400,17 +391,17 @@ class CharacterSheetForm extends React.Component {
                                 onClick={() => {
                                     if (this.checkIfEmpty()) {
                                         if (this.state._id === null) {
-                                            this.createNewCharacterSheet();
+                                            this.props.createCharacterSheetForCurrentUser(this.createCharacterSheetFromState());
                                         } else {
-                                            this.editCharacterSheet();
+                                            this.props.updateCharacterSheetForCurrentUser(this.state._id, this.createCharacterSheetFromState());
                                         }
-                                        this.props.handleClose();
+                                        this.setState({started: true});
                                     }
                                 }}
                                 color="primary"
                                 variant="contained"
                             >
-                                {this.props.type} Character
+                                {(this.props.sheet.createPending || this.props.sheet.editPending) ? <CircularProgress color="inherit" size={25}/> : this.props.type + " Character"}
                                 </Button>
                         </Grid>
                         <Grid item>
@@ -475,12 +466,15 @@ function TextMapForm(props) {
 }
 
 const mapStateToProps = state => ({
-    user: state.user
+    user: state.user,
+    sheet: state.sheet
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     fetchCurrentUser: fetchCurrentUser,
-    setLightMode: setLightMode
+    setLightMode: setLightMode,
+    createCharacterSheetForCurrentUser: createCharacterSheetForCurrentUser,
+    updateCharacterSheetForCurrentUser: updateCharacterSheetForCurrentUser,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(CharacterSheetForm)));

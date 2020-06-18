@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 
 import { bindActionCreators } from 'redux';
 import { fetchCurrentUser } from './../../redux/actions/userActions';
+import { CircularProgress } from '@material-ui/core';
 
 const styles = theme => ({
   root: {
@@ -27,7 +28,13 @@ const styles = theme => ({
 class LandingPage extends React.Component {
   render() {
     const classes = this.props.classes;
-    if(this.props.user.currentUser){
+    if(this.props.user.fetchPending){
+      return (
+        <div className={classes.root}>
+          <CircularProgress></CircularProgress>
+        </div>
+      );
+    } else if(this.props.user.currentUser){
       return (
         <div className={classes.root}>
           <Typography variant="h2" align="center">Hello, {this.props.user.currentUser.displayName}.</Typography>

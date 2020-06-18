@@ -1,14 +1,14 @@
-import { 
-    LOGIN_USER_PENDING, 
-    LOGIN_USER_SUCCESS, 
-    LOGIN_USER_ERROR, 
+import {
+    LOGIN_USER_PENDING,
+    LOGIN_USER_SUCCESS,
+    LOGIN_USER_ERROR,
 
-    REGISTER_USER_PENDING, 
-    REGISTER_USER_SUCCESS, 
-    REGISTER_USER_ERROR, 
+    REGISTER_USER_PENDING,
+    REGISTER_USER_SUCCESS,
+    REGISTER_USER_ERROR,
 
-    LOGOUT_CURRENT_USER_PENDING, 
-    LOGOUT_CURRENT_USER_SUCCESS, 
+    LOGOUT_CURRENT_USER_PENDING,
+    LOGOUT_CURRENT_USER_SUCCESS,
     LOGOUT_CURRENT_USER_ERROR,
 
     FETCH_CURRENT_USER_PENDING,
@@ -58,7 +58,7 @@ export default function user(state = initialState, action) {
         case LOGOUT_CURRENT_USER_PENDING:
             return { ...state, logoutPending: true };
         case LOGOUT_CURRENT_USER_SUCCESS:
-            return { ...state, logoutPending: false, currentUser: null, logoutPending: null, ...resetErrors };
+            return { ...state, logoutPending: false, currentUser: null, ...resetErrors };
         case LOGOUT_CURRENT_USER_ERROR:
             return { ...state, logoutPending: false, currentUser: null, logoutError: action.error };
 
@@ -80,11 +80,11 @@ export default function user(state = initialState, action) {
 
         // Update user
         case UPDATE_CURRENT_USER_PENDING:
-            return { ...state, updatePending: true};
+            return { ...state, updatePending: true };
         case UPDATE_CURRENT_USER_SUCCESS:
             return { ...state, updatePending: false, currentUser: action.user, ...resetErrors };
         case UPDATE_CURRENT_USER_ERROR:
-            return { ...state, updatePending: false, currentUser: null, updateError: action.error};
+            return { ...state, updatePending: false, currentUser: null, updateError: action.error };
         default:
             return state;
     }

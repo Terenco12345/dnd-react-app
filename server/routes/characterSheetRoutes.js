@@ -7,7 +7,7 @@ module.exports = function (app) {
     /**
      * Retrieval of all character sheets attached to authenticated user
      */
-    app.get("/character-sheet/all", (req, res, next) => {
+    app.get("/character-sheet/current-user/all", (req, res, next) => {
         passport.authenticate('jwt', async (err, tokenContent, info) => {
             if (err) {
                 res.status(500).send(err);
@@ -49,7 +49,7 @@ module.exports = function (app) {
     /**
      * Creation of new character sheet
      */
-    app.post("/character-sheet/new", (req, res, next) => {
+    app.post("/character-sheet/current-user/new", (req, res, next) => {
         passport.authenticate('jwt', async (err, tokenContent, info) => {
             if (err) {
                 res.status(500).send(err);
@@ -89,7 +89,7 @@ module.exports = function (app) {
     /**
      * Update of character sheet by ID
      */
-    app.post("/character-sheet/:id", (req, res, next) => {
+    app.post("/character-sheet/current-user/:id", (req, res, next) => {
         passport.authenticate('jwt', async (err, tokenContent, info) => {
             if (err) {
                 res.status(500).send(err);
@@ -113,9 +113,9 @@ module.exports = function (app) {
     });
 
     /**
-     * Deletion of character sheet by ID
+     * Deletion of character sheet by ID, upon successful deletion, the sheet that was deleted is sent
      */
-    app.delete("/character-sheet/:id", (req, res, next) => {
+    app.delete("/character-sheet/current-user/:id", (req, res, next) => {
         passport.authenticate('jwt', async (err, tokenContent, info) => {
             if (err) {
                 res.status(500).send(err);

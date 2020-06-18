@@ -4,12 +4,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/styles';
 import AddIcon from '@material-ui/icons/Add';
-import axios from 'axios';
 import React from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 
 import { fetchCurrentUser } from './../../redux/actions/userActions';
-import { retrieveCharacterSheetsForCurrentUser } from '../../redux/actions/characterSheetActions';
+import { retrieveCharacterSheetsForCurrentUser, updateCharacterSheetForCurrentUser, deleteCharacterSheetForCurrentUser } from '../../redux/actions/characterSheetActions';
 import avatars from '../../avatars';
 import CharacterSheetForm from './CharacterSheetForm';
 
@@ -187,23 +186,6 @@ class CharacterSheetGalleryPage extends React.Component {
         }))
     }
 
-    /**
-     * Sends a request to delete a character sheet with a given MongoDB ID.
-     * @param sheetId id of the character sheet to delete.
-     */
-    async deleteCharacterSheet(sheetId) {
-        axios({
-            method: 'delete',
-            withCredentials: true,
-            url: process.env.REACT_APP_SERVER_IP + '/character-sheet/' + sheetId,
-        }).then((res) => {
-            console.log(res);
-            this.props.retrieveCharacterSheetsForCurrentUser();
-        }).catch((err) => {
-            console.log(err);
-        });
-    }
-
     render() {
         const classes = this.props.classes;
         return (
@@ -215,18 +197,16 @@ class CharacterSheetGalleryPage extends React.Component {
                         refreshCharacterSheets={this.props.retrieveCharacterSheetsForCurrentUser.bind(this)}
                         formSheet={emptySheet}
                     />
-                )
-                }
+                )}
 
                 {this.state.characterSheetEditorEnabled && (
                     <CharacterSheetForm
                         handleClose={this.disableCharacterSheetForm.bind(this)}
                         type={this.state.characterSheetCreatorEnabled ? ("Create") : ("Edit")}
-                        refreshCharacterSheets={this.retrieveCharacterSheets.bind(this)}
+                        refreshCharacterSheets={this.props.retrieveCharacterSheetsForCurrentUser}
                         formSheet={this.state.formSheet}
                     />
-                )
-                }
+                )}
 
                 <Typography variant='h2'>Character sheet view</Typography>
                 <div className={classes.sortContainer}>
@@ -260,7 +240,7 @@ class CharacterSheetGalleryPage extends React.Component {
                     <div style={{ marginTop: 20 }}>
                         <Typography variant="body1" gutterBottom>Sheets are loading...</Typography>
                         <CircularProgress />
-                    </div> : 
+                    </div> :
                     this.props.sheet.sheets.length === 0 ?
                         <Typography>Uh oh! It looks like you don't have any sheets!</Typography> :
                         <Grid className={classes.characterSheetList}
@@ -286,7 +266,7 @@ class CharacterSheetGalleryPage extends React.Component {
                                         <CardActions className={classes.cardAction}>
                                             <Button onClick={() => { this.props.history.push("/character-sheet/" + sheet._id) }}>View</Button>
                                             <Button onClick={() => { this.enableCharacterSheetEditor(sheet) }}>Edit</Button>
-                                            <Button onClick={() => { this.deleteCharacterSheet(sheet._id) }}>Delete</Button>
+                                            <Button onClick={() => { this.props.deleteCharacterSheetForCurrentUser(sheet._id) }}>Delete</Button>
                                         </CardActions>
                                     </Card>
                                 </Grid>
@@ -309,7 +289,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     fetchCurrentUser: fetchCurrentUser,
-    retrieveCharacterSheetsForCurrentUser: retrieveCharacterSheetsForCurrentUser
+    retrieveCharacterSheetsForCurrentUser: retrieveCharacterSheetsForCurrentUser,
+    deleteCharacterSheetForCurrentUser: deleteCharacterSheetForCurrentUser,
+    updateCharacterSheetForCurrentUser: updateCharacterSheetForCurrentUser
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(CharacterSheetGalleryPage)));
