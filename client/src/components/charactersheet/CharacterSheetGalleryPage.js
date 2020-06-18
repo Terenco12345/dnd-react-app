@@ -267,6 +267,7 @@ class CharacterSheetGalleryPage extends React.Component {
                                             <Button onClick={() => { this.props.history.push("/character-sheet/" + sheet._id) }}>View</Button>
                                             <Button onClick={() => { this.enableCharacterSheetEditor(sheet) }}>Edit</Button>
                                             <Button onClick={() => { this.props.deleteCharacterSheetForCurrentUser(sheet._id) }}>{this.props.sheet.deletePending ? <CircularProgress size={25} /> : "Delete"}</Button>
+                                            <Button onClick={() => { this.props.deleteCharacterSheetForCurrentUser(sheet._id) }}>Delete</Button>
                                         </CardActions>
                                     </Card>
                                 </Grid>
