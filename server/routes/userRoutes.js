@@ -15,7 +15,7 @@ module.exports = function (app) {
         var user = new User();
 
         user.displayName = displayName;
-        user.email = email;
+        user.email = email.toLowerCase();
         user.password = hashedPassword;
 
         await user.save((err) => {

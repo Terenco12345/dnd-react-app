@@ -10,6 +10,7 @@ import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 import HomeIcon from '@material-ui/icons/Home';
 import MeetingRoomOutlinedIcon from '@material-ui/icons/MeetingRoomOutlined';
+import GroupIcon from '@material-ui/icons/Group';
 import React from 'react';
 
 import { fetchCurrentUser, logoutCurrentUser } from './../../redux/actions/userActions';
@@ -80,6 +81,10 @@ class SideDrawer extends React.Component {
                             <ListItem button onClick={() => { this.props.history.push("/character-sheet-gallery"); this.props.handleDrawerClose() }}>
                                 <ListItemIcon><AssignmentIndOutlinedIcon /></ListItemIcon>
                                 <ListItemText>My Character Sheets</ListItemText>
+                            </ListItem>
+                            <ListItem button onClick={() => { this.props.history.push("/campaigns"); this.props.handleDrawerClose() }}>
+                                <ListItemIcon><GroupIcon /></ListItemIcon>
+                                <ListItemText>Campaigns</ListItemText>
                             </ListItem>
                             <ListItem button onClick={() => { this.props.logoutCurrentUser(); this.props.handleDrawerClose() }}>
                                 <ListItemIcon><ExitToAppOutlinedIcon /></ListItemIcon>

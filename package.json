@@ -23,9 +23,9 @@
   "homepage": "https://github.com/Terenco12345/dnd-react-app#readme",
   "dependencies": {
     "concurrently": "^5.2.0",
-    "lerna": "^3.21.0"
+    "lerna": "^3.22.1"
   },
   "devDependencies": {
-    "redux-devtools": "^3.5.0"
+    "redux-devtools": "^3.6.0"
   }
 }

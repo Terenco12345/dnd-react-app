@@ -20,7 +20,7 @@ module.exports = function initializePassport(passport){
 
     const authenticateUserLocal = async (email, password, done) => {
         try {
-            const user = await User.findOne({email: email});
+            const user = await User.findOne({email: email.toLowerCase()});
             if(user){
                 // User found - Let's check the password
                 bcrypt.compare(password, user.password, (err, result)=>{
@@ -35,7 +35,7 @@ module.exports = function initializePassport(passport){
                 return done(null, false, {message: 'User with this email not found.'})
             }
         } catch (error) {
-            return done(err);
+            return done(error);
         }
     };
 
