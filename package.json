@@ -23,6 +23,7 @@
   "homepage": "https://github.com/Terenco12345/dnd-react-app#readme",
   "dependencies": {
     "concurrently": "^5.2.0",
+    "dot-prop": "^5.2.0",
     "lerna": "^3.22.1"
   },
   "devDependencies": {
