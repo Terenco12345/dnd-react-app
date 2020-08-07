@@ -5,11 +5,11 @@ module.exports = {
             expiresIn: '1h',
         },
         cookie: {
-            maxAge: 86400000,
+            maxAge: 864000000,
             httpOnly: true,
-            sameSite: false,
+            sameSite: 'none',
             signed: true,
-            secure: false,
+            secure: true,
             overwrite: true
         }
     }
